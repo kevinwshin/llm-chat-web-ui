@@ -13,7 +13,7 @@ def download_model_to_folder():
     os.makedirs(MODEL_DIR, exist_ok=True)
 
     snapshot_download(
-        "meta-llama/Llama-2-13b-chat-hf",
+        "KoboldAI/LLaMA2-13B-Psyfighter2",
         local_dir=MODEL_DIR,
         token=os.environ["HUGGING_FACE_HUB_TOKEN"],
     )
@@ -22,9 +22,8 @@ def download_model_to_folder():
 image = (
     modal.Image.from_registry("nvcr.io/nvidia/pytorch:22.12-py3")
     .pip_install("torch==2.0.1", index_url="https://download.pytorch.org/whl/cu118")
-    # Pinned to 08/15/2023
     .pip_install(
-        "vllm @ git+https://github.com/vllm-project/vllm.git@805de738f618f8b47ab0d450423d23db1e636fa2",
+        "https://github.com/vllm-project/vllm/releases/download/v0.2.7/vllm-0.2.7+cu118-cp38-cp38-manylinux1_x86_64.whl",
         "typing-extensions==4.5.0",  # >=4.6 causes typing issues
     )
     # Use the barebones hf-transfer package for maximum download speeds. No progress bar, but expect 700MB/s.
